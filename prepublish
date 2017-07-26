@@ -12,10 +12,14 @@ world_shp() {
 world() {
   world_shp $1
   mkdir -p world
-  geo2topo -q 1e5 -n countries=<( \
-      shp2json -n build/ne_$1_admin_0_countries.shp \
-        | ndjson-map '(d.id = d.properties.iso_n3, delete d.properties, d)' \
-        | geostitch -n) \
+  shp2json -n build/ne_$1_admin_0_countries.shp \
+    | ndjson-map '(d.id = d.properties.iso_n3, d)' \
+    > build/ne_$1_admin_0_countries.ndjson
+  for i in MAR SAH; do
+    grep '"adm0_a3":"'$i'"' build/ne_$1_admin_0_countries.ndjson > build/$i.json
+    echo "remplacer les coordinates de $i par celles de fix-mar-sah.json"
+  done
+  geo2topo -q 1e5 -n countries=<( geostitch -n < build/ne_$1_admin_0_countries.fixed.ndjson) \
     | topomerge land=countries \
     > world/$1.json
   shp2json -n build/ne_$1_admin_0_countries.shp \
@@ -26,4 +30,4 @@ world() {
 }
 
 world 110m
-world 50m
+#world 50m

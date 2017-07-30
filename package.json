@@ -13,7 +13,7 @@
     "url": "https://github.com/topojson/world-atlas.git"
   },
   "scripts": {
-    "run": "bash run",
+    "run": "bash run"
   },
   "devDependencies": {
     "d3-dsv": "^1.0.3",

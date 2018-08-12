@@ -2,6 +2,10 @@
 
 rm -rvf world
 
+install() {
+  npm install -g d3-dsv d3-geo-projection ndjson-cli shapefile topojson@3
+}
+
 world_shp() {
   mkdir -p build
   curl -z build/ne_$1_admin_0_countries.zip -o build/ne_$1_admin_0_countries.zip http://naciscdn.org/naturalearth/$1/cultural/ne_$1_admin_0_countries.zip

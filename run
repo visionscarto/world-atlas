@@ -111,5 +111,10 @@ t2geo() {
   topo2geo land=world/$1_land.geojson countries=world/$1_countries.geojson < world/$1.json
 }
 
+createindex() {
+  (echo -n "define(function() { return ([{ file: 'world/110m.json', format: 'topojson' }, { file: 'world/50m.json', format: 'topojson' }, { file: 'world/110m_land.geojson', format: 'geojson' }, { file: 'world/50m_land.geojson', format: 'geojson'}, { file: 'world/110m_countries.geojson', format: 'geojson' }, { file: 'world/50m_countries.geojson', format: 'geojson'}]); })") > index.js
+}
+
 worldfix 110m
+createindex 110m
 world 50m

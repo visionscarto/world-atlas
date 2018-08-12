@@ -104,6 +104,11 @@ nd2topo() {
     | ndjson-sort 'a.ISO_A3.localeCompare(b.ISO_A3)' \
     | json2tsv -n \
     > world/$1.tsv
+  t2geo $1
+}
+
+t2geo() {
+  topo2geo land=world/$1_land.geojson countries=world/$1_countries.geojson < world/$1.json
 }
 
 worldfix 110m

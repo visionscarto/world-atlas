@@ -5,7 +5,7 @@
 - adds a few Kuril Islands
 - adds Gaza
 - keeps all properties fields from NE
-
+- also export countries and land in GeoJSON
 
 ## Credits
 

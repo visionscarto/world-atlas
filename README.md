@@ -1,4 +1,4 @@
-## Natural Earth vector data, fixed & packaged
+## Natural Earth 110m vector data, fixed & packaged
 
 - fixes topological issues on the border of Sudan
 - uses UN definition for Morrocco / Western Sahara
@@ -9,7 +9,7 @@
 
 ## Usage
 
-You can use this as a drop-in replacement for [world-atlas](https://github.com/topojson/world-atlas) data:
+You can use this as a drop-in replacement for [world-atlas](https://github.com/topojson/world-atlas) 110m data:
 
 In TopoJSON:
 ```{javascript}
@@ -24,7 +24,7 @@ fetch('https://unpkg.com/ne110m_fixes/world/110m_land.geojson').then(d => d.json
 With d3:
 In GeoJSON:
 ```{javascript}
-d3.json('https://unpkg.com/ne110m_fixes/world/50m_countries.geojson')
+d3.json('https://unpkg.com/ne110m_fixes/world/110m_countries.geojson')
 ```
 
 …

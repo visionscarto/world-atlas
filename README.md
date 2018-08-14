@@ -6,6 +6,7 @@
 - adds Gaza
 - keeps all properties fields from NE
 - also export countries and land in GeoJSON
+- fixes id=578 for Norway and publishes id in the tsv file
 
 ## Usage
 

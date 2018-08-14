@@ -24,7 +24,7 @@ worldfix() {
         delete d.properties[PROP];
       }
     }), d' \
-    | ndjson-map 'i = d.properties.iso_n3, d.id = i === "-99" ? undefined : i, d' \
+    | ndjson-map 'i = d.properties.iso_n3, d.id = i === "-99" ? d.properties.name === "Norway" ? "578" : undefined : i, d' \
     | ndjson-map 'JSON.parse(JSON.stringify(d)
       // "fix Surinam / Fr. Guyane"
       //.replace(/\[-54.524\d+,2.311\d+\],\[-54.271\d+,2.738\d+\],\[-54.184\d+,3.194\d+\],\[-54.011\d+,3.622\d+\],\[-54.399\d+,4.212\d+\]/,"[-54.524754197799716,2.3118488631237852],[-54.2697051662232,2.7323916691150463],[-54.181726040246275,3.1897797713304215],[-54.00693050801901,3.6200377465925584],[-54.399542202356514,4.212611395683467]")
@@ -86,6 +86,7 @@ worldfix() {
     | ndjson-map '
       // "add three South Kuril islands"
       ((d.properties.adm0_a3 !== "RUS") ? null : (d.geometry.coordinates.push([[[146.2,44.52],[148.44,44.9],[149.15,45.64],[147.52,45.39],[146.2,44.52]].reverse()]), d.geometry.coordinates.push([[[149.63,45.85],[149.85,45.64],[151.12,46.31],[150.42,46.4],[149.63,45.85]].reverse()]),d.geometry.coordinates.push([[[155.74,50.76],[154.33,49.09],[156.66,50.54],[155.74,50.76]].reverse()]),d.geometry.coordinates.push([[[151.56,46.98],[151.87,46.7],[152.66,47.1],[152.4,47.33],[151.56,46.98]].reverse()])), d)' \
+    | ndjson-map '/* delete d.properties, */ d' \
     > build/ne_$1_admin_0_countries.ndjson
 
     nd2topo $1
@@ -103,7 +104,7 @@ world() {
       delete d.properties[PROP];
     }
   }), d' \
-  | ndjson-map 'i = d.properties.iso_n3, d.id = i === "-99" ? undefined : i, d' \
+  | ndjson-map 'i = d.properties.iso_n3, d.id = i === "-99" ? d.properties.name === "Norway" ? "578" : undefined : i, d' \
   > build/ne_$1_admin_0_countries.ndjson
 
   nd2topo $1

@@ -122,7 +122,7 @@ nd2topo() {
       delete d.properties[PROP];
     }
   }), d' \
-    | ndjson-map 'd.properties' \
+    | ndjson-map 'c = {"Norway":"578"}, i = d.properties.iso_n3, i = i === "-99" ? c[d.properties.name]||"" : i, Object.assign({id: i}, d.properties)' \
     | ndjson-sort 'a.iso_a3.localeCompare(b.iso_a3)' \
     | json2tsv -n \
     > world/$1.tsv

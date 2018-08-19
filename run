@@ -9,6 +9,7 @@ install() {
 world_shp() {
   mkdir -p build
   curl -z build/ne_$1_admin_0_countries.zip -o build/ne_$1_admin_0_countries.zip http://naciscdn.org/naturalearth/$1/cultural/ne_$1_admin_0_countries.zip
+  #curl -z build/ne_$1_admin_0_countries.zip -o build/ne_$1_admin_0_countries.zip "http://www.naturalearthdata.com/http//www.naturalearthdata.com/download/110m/cultural/ne_110m_admin_0_countries.zip?version=2.0.0"
   unzip -od build build/ne_$1_admin_0_countries.zip
   chmod a-x build/ne_$1_admin_0_countries.*
 }
@@ -111,26 +112,29 @@ world() {
 }
 
 nd2topo() {
-  geo2topo -q 1e5 -n countries=<( geostitch -n < build/ne_$1_admin_0_countries.ndjson) \
+  # precision = 4 is 1 digit better than the topojson transform.scale() element
+
+  # build the countries GeoJSON with all data fields
+  geostitch -n < build/ne_$1_admin_0_countries.ndjson \
+    | ndjson-reduce | ndjson-map '{type: "FeatureCollection", features: d}' \
+    | geoproject -n --precision 4 'd3.geoIdentity()' --out world/$1_countries.geojson
+
+  # build the merged land GeoJSON
+  geo2topo -n countries=<( geostitch -n < build/ne_$1_admin_0_countries.ndjson) \
+      | topomerge land=countries \
+      | topo2geo land=build/$1_land.geojson
+  geoproject --precision 4 'd3.geoIdentity()' --out world/$1_land.geojson build/$1_land.geojson
+
+  # build the TopoJSON (optimized: no data fields except id)
+  geo2topo -q 1e5 -n countries=<( ndjson-map 'delete d.properties, d' < build/ne_$1_admin_0_countries.ndjson | geostitch -n) \
     | topomerge land=countries \
     > world/$1.json
-  shp2json --encoding utf-8 -n build/ne_$1_admin_0_countries.shp \
-  | ndjson-map 'Object.keys(d.properties).forEach(function(PROP) {
-    var prop = PROP.toLowerCase();
-    if (prop !== PROP) {
-      d.properties[prop] = d.properties[PROP];
-      delete d.properties[PROP];
-    }
-  }), d' \
-    | ndjson-map 'c = {"Norway":"578","N. Cyprus":"-1","Kosovo":"-2","Somaliland":"-3"}, i = d.properties.iso_n3, i = i === "-99" ? c[d.properties.name] : i, Object.assign({id: i}, d.properties)' \
+
+  # build the TSV
+  ndjson-map 'Object.assign({id: d.id}, d.properties)' < build/ne_$1_admin_0_countries.ndjson \
     | ndjson-sort 'a.iso_a3.localeCompare(b.iso_a3)' \
     | json2tsv -n \
     > world/$1.tsv
-  t2geo $1
-}
-
-t2geo() {
-  topo2geo land=world/$1_land.geojson countries=world/$1_countries.geojson < world/$1.json
 }
 
 createindex() {

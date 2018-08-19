@@ -10,7 +10,7 @@
 
 ### 110m & 50m:
 
-- uses UN definition for Morrocco / Western Sahara
+- uses UN definition for Morocco / Western Sahara
 - export countries and land as GeoJSON
 - publishes id in the tsv file
 

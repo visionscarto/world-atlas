@@ -3,5 +3,3 @@ build/
 package-lock.json
 node_modules/
 *~
-fix-mar-sah.json
-MAR-SAH/

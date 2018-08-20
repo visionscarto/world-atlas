@@ -1,6 +1,6 @@
 {
   "name": "visionscarto-world-atlas",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Derived from mbostock's world-atlas: Pre-built TopoJSON from Natural Earth.",
   "license": "BSD-3-Clause",
   "keywords": [

@@ -1,0 +1,36 @@
+#!/usr/bin/env node
+
+var width = 960,
+    height = 500,
+    src = process.argv[2],
+    projectionSymbol = "geoRobinson";
+
+var fs = require("fs"),
+    topojson = require("topojson-client"),
+    Canvas = require("canvas"),
+    d3 = Object.assign({}, require("d3-geo"), require("d3-geo-projection"));
+
+var canvas = new Canvas(width, height),
+    context = canvas.getContext("2d");
+
+var world = require("../world/110m.json"),
+    land = topojson.feature(world, world.objects[src || "land"]),
+    graticule = d3.geoGraticule(),
+    outline = {type: "Sphere"};
+
+var path = d3.geoPath()
+    .projection(d3[projectionSymbol]().precision(0.1).rotate([-10,0]))
+    .context(context);
+
+context.fillStyle = "#fff";
+context.fillRect(0, 0, width, height);
+context.save();
+
+context.beginPath();
+path(land);
+context.fillStyle = "#fefef2";
+context.fill();
+context.stroketyle = "#000";
+context.stroke();
+
+canvas.pngStream().pipe(process.stdout);

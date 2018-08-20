@@ -1,0 +1,51 @@
+<body>
+</body>
+
+<script src="https://unpkg.com/d3"></script>
+<script type="text/javascript">
+
+async function draw(src) {
+  const world = await d3.json(src);
+  const focus =
+    false && world.features && world.features.filter(d => d.id == "729").pop();
+  const projection = d3.geoEquirectangular();
+
+  if (focus) projection.fitExtent([[20, 20], [960 - 20, 500 - 20]], focus);
+
+  const path = d3.geoPath().projection(projection);
+  const map = d3
+    .select("body")
+    .append("svg")
+    .attr("width", 960)
+    .attr("height", 500);
+  map
+    .selectAll("path")
+    .data(world.features || [world])
+    .enter()
+    .append("path")
+    .attr("d", path)
+    .attr("stroke", "black")
+    .attr("fill", "#fefef0")
+    .attr("fill-opacity", "0.5");
+
+  if (focus)
+    map
+      .append("path")
+      .attr("d", path(focus))
+      .attr("stroke", "red")
+      .attr("fill", "orange");
+
+  map
+    .append("text")
+    .text(src)
+    .attr("dy", 20);
+}
+
+(async function() {
+  await draw("../world/110m_land.geojson");
+  await draw("../world/110m_countries.geojson");
+  await draw("../world/50m_land.geojson");
+  await draw("../world/50m_countries.geojson");
+})();
+
+</script>

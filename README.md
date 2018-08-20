@@ -11,7 +11,7 @@
 ### 110m & 50m:
 
 - uses UN definition for Morocco / Western Sahara
-- export countries and land as GeoJSON
+- export countries and land as a quantized GeoJSON
 - publishes id in the tsv file
 
 
@@ -34,7 +34,11 @@ With d3:
 d3.json('https://unpkg.com/visionscarto-world-atlas/world/110m_countries.geojson')
 ```
 
-…
+<img src="img/land.png" width=480>
+
+<img src="img/countries.png" width=480>
+
+
 
 ## Credits
 

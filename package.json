@@ -16,6 +16,7 @@
     "run": "bash run"
   },
   "devDependencies": {
+    "canvas": "1",
     "d3-dsv": "^1.0.3",
     "d3-geo-projection": "^2.4.1",
     "ndjson-cli": "^0.3.0",

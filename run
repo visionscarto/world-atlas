@@ -153,13 +153,13 @@ nd2topo() {
   geostitch -n < build/ne_$1_admin_0_countries.ndjson \
     | ndjson-reduce | ndjson-map '{type: "FeatureCollection", features: d}' \
     > build/$1_countries.geojson
-  geoproject -n --precision 4 'd3.geoIdentity()' build/$1_countries.geojson --out world/$1_countries.geojson
+  node bin/geoformat --precision 4 < build/$1_countries.geojson > world/$1_countries.geojson
 
   # build the merged land GeoJSON
   geo2topo -n countries=<( geostitch -n < build/ne_$1_admin_0_countries.ndjson) \
       | topomerge land=countries \
       | topo2geo land=build/$1_land.geojson
-  geoproject --precision 4 'd3.geoIdentity()' --out world/$1_land.geojson build/$1_land.geojson
+  node bin/geoformat --precision 4 < build/$1_land.geojson > world/$1_land.geojson
 
   # build the TopoJSON (optimized: no data fields except id)
   geo2topo -q 1e5 -n countries=<( ndjson-map 'delete d.properties, d' < build/ne_$1_admin_0_countries.ndjson | geostitch -n) \

@@ -44,6 +44,8 @@ worldfix() {
       .replace(/(\[33\.77\d+,30\.96\d+\])/g,"$1,[34.20,31.28]")
       .replace(/\[34\.55\d+,31\.5\d+\]/g,"[34.65,31.40]")
       .replace(/\[34\.26\d+,31\.2[12]\d+\]/g,"[34.34,31.03]")
+      // "fix tripoint Egypt/Israel/Jordan"
+      .replace(/\[34\.9226\d+,29\.5013[23]\d+\]/g,"[34.9226,29.50133]")
       )' \
     | ndjson-map 'd.properties.fill = ["#ff0000","#ff4d00","#ff9900","#ffe600","#ccff00","#80ff00","#33ff00","#00ff19","#00ff66","#00ffb3","#00ffff","#00b2ff","#0066ff","#001aff","#3300ff","#8000ff","#cc00ff","#ff00e6","#ff0099","#ff004d"][Math.random()*20|0],d' \
     | ndjson-map '

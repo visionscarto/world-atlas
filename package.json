@@ -1,6 +1,6 @@
 {
   "name": "visionscarto-world-atlas",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Derived from mbostock's world-atlas: Pre-built TopoJSON from Natural Earth.",
   "license": "BSD-3-Clause",
   "homepage": "https://github.com/Fil/visionscarto-world-atlas",
@@ -14,10 +14,9 @@
     "url": "https://github.com/Fil/visionscarto-world-atlas.git"
   },
   "scripts": {
-    "run": "bash run"
+    "build": "bash run"
   },
   "devDependencies": {
-    "canvas": "1",
     "d3-dsv": "^1.0.3",
     "d3-geo-projection": "^2.4.0",
     "ndjson-cli": "^0.3.0",

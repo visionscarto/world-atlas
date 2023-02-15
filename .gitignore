@@ -1,7 +1,3 @@
-build/
 .DS_Store
-package-lock.json
-node_modules/
 *~
 world/
-index.js

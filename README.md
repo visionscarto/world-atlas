@@ -1,37 +1,25 @@
-## Natural Earth vector data, fixed & packaged
+## Natural Earth vector data, modified & simplified
 
-### 110m:
-
-- fixes topological issues on the border of Sudan
-- adds a few Kuril Islands
-- adds Gaza
-- fixes id="578" for Norway
-- countries with no official iso_n3 code receive a negative id
-
-### 110m & 50m:
-
-- uses UN definition for Morocco / Western Sahara
-- export countries and land as a quantized GeoJSON
-- publishes id in the tsv file
-
+A modification of [topojson/world-atlas](https://github.com/topojson/world-atlas) 110m and 50m files, with various modifications intended for Visionscarto:
+- fixes topology issues (border of Sudan; North Korea…)
+- adds a few shapes (Kuril Islands; Gaza)
+- better reflects the UN views (Ukraine; Western Sahara)
+- adds names and ids (Norway; Kosovo; North Macedonia…)
+- adds 3-letter codes (as properties.a3)
+- quantized and optimized
 
 ## Usage
 
-You can use this as a drop-in replacement for [world-atlas](https://github.com/topojson/world-atlas) 110m and 50m data:
+Consume these files with TopoJSON:
 
-In TopoJSON:
 ```{javascript}
-fetch('https://unpkg.com/visionscarto-world-atlas/world/110m.json').then(d => d.json())
+const world = await fetch("https://cdn.jsdelivr.net/npm/visionscarto-world-atlas@0.1.0/world/110m.json").then(d => d.json());
+const features = topojson.feature(world, world.objects.countries);
 ```
 
-In GeoJSON:
 ```{javascript}
-fetch('https://unpkg.com/visionscarto-world-atlas/world/50m_land.geojson').then(d => d.json())
-```
-
-With d3:
-```{javascript}
-d3.json('https://unpkg.com/visionscarto-world-atlas/world/110m_countries.geojson')
+const world = await fetch("https://cdn.jsdelivr.net/npm/visionscarto-world-atlas@0.1.0/world/50m.json").then(d => d.json());
+const land = topojson.feature(world, world.objects.land);
 ```
 
 <img src="img/land.png" width=480>

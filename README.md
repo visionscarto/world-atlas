@@ -8,6 +8,8 @@ A modification of [topojson/world-atlas](https://github.com/topojson/world-atlas
 - adds 3-letter codes (as properties.a3)
 - quantized and optimized
 
+[Full documentation and examples notebook](https://observablehq.com/@visionscarto/world-atlas-topojson).
+
 ## Usage
 
 Consume these files with TopoJSON:

@@ -1,6 +1,7 @@
 ## Natural Earth vector data, modified & simplified
 
 A modification of [topojson/world-atlas](https://github.com/topojson/world-atlas) 110m and 50m files, with various modifications intended for Visionscarto:
+
 - fixes topology issues (border of Sudan; North Korea…)
 - adds a few shapes (Kuril Islands; Gaza)
 - better reflects the UN views (Ukraine; Western Sahara)
@@ -15,20 +16,18 @@ A modification of [topojson/world-atlas](https://github.com/topojson/world-atlas
 Consume these files with TopoJSON:
 
 ```{javascript}
-const world = await fetch("https://cdn.jsdelivr.net/npm/visionscarto-world-atlas@0.1.0/world/110m.json").then(d => d.json());
+const world = await fetch("https://cdn.jsdelivr.net/npm/visionscarto-world-atlas@1/world/110m.json").then(d => d.json());
 const features = topojson.feature(world, world.objects.countries);
 ```
 
 ```{javascript}
-const world = await fetch("https://cdn.jsdelivr.net/npm/visionscarto-world-atlas@0.1.0/world/50m.json").then(d => d.json());
+const world = await fetch("https://cdn.jsdelivr.net/npm/visionscarto-world-atlas@1/world/50m.json").then(d => d.json());
 const land = topojson.feature(world, world.objects.land);
 ```
 
 <img src="img/land.png" width=480>
 
 <img src="img/countries.png" width=480>
-
-
 
 ## Credits
 
